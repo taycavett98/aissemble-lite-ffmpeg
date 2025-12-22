@@ -17,9 +17,8 @@
 1. create input handler : accept file path or valid format (like .mp3, .mp4, etc); handle both types
 2. build ffmpeg audio extractor - extract audio from video, do preprocessing here. lesson learned from previous project was to standardize audio inputs like decrease
     background noises and I think there was one other standardization we applied to all audio files to improve quality
-3. chunking? if it makes sense, but if they aren't looking to stream does it make sense?
-4. stub out a function that would be able to upload audio content to S3 and return a URI so we can pass it directly to aws transcribe
-5. put pieces together in a main() and test it: input -> preprocess -> upload -> output
+3. stub out a function that would be able to upload audio content to S3 and return a URI so we can pass it directly to aws transcribe
+4. put pieces together in a main() and test it: input -> preprocess -> upload -> output
 
 
 ### what does AWS transcribe need?
@@ -27,6 +26,8 @@
 - supported format, lets use wav
 - recommended specs: 16kHz ssample rate, mono channel, 16-bit PCM
 - file permissions? set to all read access?
+
+# TESTING 
 
 ## Audio Processing Endpoint
 
@@ -39,3 +40,5 @@ uv run aissemble_lite_ffmpeg serve
 ```
 ### Navigate to SwaggerUI -> `localhost:8080/docs`
 use UI to upload a file to `/auio/process` endpoint
+
+## needs env configuration for setting up s3 bucket
