@@ -1,0 +1,29 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+  // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+  // List of extensions which should be recommended for users of this workspace.
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "charliermarsh.ruff", // ruff linter and formatter
+    "davidanson.vscode-markdownlint", //markdown linting etc.
+    "eamodio.gitlens", // git extension; some additional git-related features.
+    "gruntfuggly.todo-tree", // support for managing / reviewing "TODO"s in code comments.
+    "hediet.vscode-drawio", // support for drawio diagrams
+    "irongeek.vscode-env", // formatting and syntax highlighting support for env files
+    "ms-python.python", // official python extension
+    "njpwerner.autodocstring", //Generate python docstrings
+    "streetsidesoftware.code-spell-checker", //Spell checking in source code.
+    // "tamasfe.even-better-toml", //TOML file features and support e.g. pyproject.toml
+    "panekj.even-betterer-toml", //Release fork of above, which doesn't support the new pyproject.toml.
+    // quality of life extensions... recommended personally, but less impactful
+    "mechatroner.rainbow-csv",
+    "mrmlnc.vscode-duplicate",
+    "nhoizey.gremlins",
+    "tyriar.sort-lines",
+    "redhat.vscode-yaml",
+    // For making conventional commits easier.
+    "vivaxy.vscode-conventional-commits"
+  ],
+  // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+  "unwantedRecommendations": []
+}

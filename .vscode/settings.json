@@ -1,0 +1,37 @@
+{
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "notebook.formatOnSave.enabled": true,
+  "python.defaultInterpreterPath": "backend/.venv/bin/python",
+  "python.analysis.extraPaths": ["backend/"],
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    },
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": false
+  },
+  //These settings only impact the ruff behavior when ran by/with vscode.
+  "ruff.configuration": {
+    "lint": {
+      "unfixable": [
+        "F401",
+        "F841"
+      ]
+    }
+  }
+}
