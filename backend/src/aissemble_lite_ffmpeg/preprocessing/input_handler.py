@@ -47,21 +47,3 @@ class InputHandler():
             raise RuntimeError(f"Failed to upload {wav_filepath} to S3")
 
         return s3_uri
-
-
-# # usage
-# def main():
-
-#     input_path = "/Users/sallyecavett/Downloads/aiSSEMBLE Daily Standup-20251219_110209-Meeting Recording.mp4"
-
-#     input_handler = InputHandler()
-
-#     file_uri = input_handler.process_input(input_path)
-
-#     if file_uri is not None:
-#         print(f'got the file uri!: {file_uri}')
-#     else:
-#         print('failed somewhere...')
-
-# if __name__ == "__main__":
-#     main()
