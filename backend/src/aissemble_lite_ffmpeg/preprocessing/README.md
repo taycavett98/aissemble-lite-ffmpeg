@@ -27,3 +27,15 @@
 - supported format, lets use wav
 - recommended specs: 16kHz ssample rate, mono channel, 16-bit PCM
 - file permissions? set to all read access?
+
+## Audio Processing Endpoint
+
+### Start the Server
+
+From the `backend` directory:
+
+```bash
+uv run aissemble_lite_ffmpeg serve
+```
+### Navigate to SwaggerUI -> `localhost:8080/docs`
+use UI to upload a file to `/auio/process` endpoint

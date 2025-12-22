@@ -41,7 +41,7 @@ class InputHandler():
         # check if input extension is in acceptable types
         self._check_file_extension(input)
         wav_filepath = self._ensure_wav(input)
-        s3_uri = self.s3_handler.upload_file(wav_filepath=wav_filepath)
+        s3_uri = self.s3_handler.upload_file(file_path=wav_filepath)
 
         if not s3_uri:
             raise RuntimeError(f"Failed to upload {wav_filepath} to S3")
