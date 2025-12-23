@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import time
 from .ffmpeg_handler import FfmpegHandler
 from .s3_handler import S3Handler
 
@@ -30,7 +31,7 @@ class InputHandler():
         return output
 
 
-    def process_input(self, input: str):
+    def process_input(self, input: str) -> tuple[str, dict]:
         """This function ensures the file is in .wav format and gets a uri from the s3
             bucket so that we can pass a uri to the aws transcribe function.
 
@@ -38,12 +39,23 @@ class InputHandler():
             audio input for the highest quality. 
         
         """
+        start_time = time.time()
         # check if input extension is in acceptable types
         self._check_file_extension(input)
-        wav_filepath = self._ensure_wav(input)
-        s3_uri = self.s3_handler.upload_file(file_path=wav_filepath)
+
+        wav_filepath, ffmpeg_metrics = self._ensure_wav(input)
+        
+        s3_uri, s3_metrics = self.s3_handler.upload_file(file_path=wav_filepath)
 
         if not s3_uri:
             raise RuntimeError(f"Failed to upload {wav_filepath} to S3")
+        
+        total_time = time.time() - start_time
 
-        return s3_uri
+        metrics = {
+            'total_processing_time': round(total_time, 3),
+            **ffmpeg_metrics,
+            **s3_metrics
+        }
+
+        return s3_uri, metrics
