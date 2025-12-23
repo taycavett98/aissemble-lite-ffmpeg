@@ -15,4 +15,4 @@ The script will:
 - send S3 URI to `/transcribe` endpoint (AWS)
 - measure time for each stage
 - save detailed results in `baseline_results.jsonl`
-- generate summary in `baseline_summary.json`
+- print summary to console
