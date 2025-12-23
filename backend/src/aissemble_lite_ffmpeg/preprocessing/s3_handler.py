@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class S3Handler():
     def __init__(self, bucket_name: Optional[str] = None, region: Optional[str] = None):
         # initialize boto3 s3 client
-        self.bucket_name = bucket_name or os.getenv('S3_BUCKET_NAME', 'my-bucket')
+        self.bucket_name = bucket_name or os.getenv('S3_BUCKET_NAME', 'aissemble-transcribe')
         self.region = region or os.getenv('AWS_REGION', 'us-east-1')
         self.s3_client = boto3.client('s3', region_name = self.region)
 
