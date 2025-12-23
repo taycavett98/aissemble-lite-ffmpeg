@@ -47,7 +47,7 @@ import os
 from aissemble_open_inference_protocol_fastapi.aissemble_oip_fastapi import (
     AissembleOIPFastAPI,
 )
-
+from .preprocessing.transcribe import TranscriptionService
 from .modeling.handler import InferenceHandler
 from .routers.audio import router as audio_router
 
@@ -72,16 +72,75 @@ class MyResponseModel(BaseModel):
     content: str = "Hello World"
 
 
+class TranscriptionRequestModel(BaseModel):
+    """Request model for batch transcription."""
+
+    s3_uris: list[str]
+
+
+class TranscriptionResultModel(BaseModel):
+    """Result model for a single file transcription."""
+
+    s3_uri: str
+    success: bool
+    s3_output_uri: str | None = None
+    error: str | None = None
+
+
+class TranscriptionResponseModel(BaseModel):
+    """Response model for batch transcription."""
+
+    total_files: int
+    successful: int
+    failed: int
+    results: list[TranscriptionResultModel]
+
+
 @app.get("/", response_model=MyResponseModel)
 async def root() -> MyResponseModel:
-    """Example "Root" route.
-
-    This is an example configuration of the "Root" route.
-    You will almost definitely want to update or remove this route.
-
-    It's here mostly to serve as an example/reference.
-    """
+    """Root endpoint."""
     return MyResponseModel(content="Hello World")
+
+
+@app.post("/transcribe", response_model=TranscriptionResponseModel)
+async def transcribe_files(
+    request: TranscriptionRequestModel,
+) -> TranscriptionResponseModel:
+    """Transcribe media files from S3.
+
+    Accepts a list of S3 URIs, transcribes them using AWS Transcribe,
+    and saves the transcripts to the output/ folder in the same S3 bucket.
+
+    Args:
+        request: Request containing list of S3 URIs to transcribe.
+
+    Requires environment variables:
+    - AWS_REGION: AWS region (default: us-east-1)
+
+    Returns:
+        TranscriptionResponseModel with summary and individual file results.
+    """
+    transcription_service = TranscriptionService()
+    results = transcription_service.transcribe_all(request.s3_uris)
+
+    result_models = [
+        TranscriptionResultModel(
+            s3_uri=r.s3_uri,
+            success=r.success,
+            s3_output_uri=r.s3_output_uri,
+            error=r.error,
+        )
+        for r in results
+    ]
+
+    successful = sum(1 for r in results if r.success)
+
+    return TranscriptionResponseModel(
+        total_files=len(results),
+        successful=successful,
+        failed=len(results) - successful,
+        results=result_models,
+    )
 
 def start_app() -> None:
     """Start the AissembleOIPFastAPI webapp."""

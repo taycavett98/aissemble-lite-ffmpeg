@@ -1,3 +1,4 @@
+from pathlib import Path
 import boto3
 import os
 import logging
@@ -18,9 +19,16 @@ class S3Handler():
     def upload_file(self, file_path) -> str:
         """This function uploads file to the bucket and returns a uri"""
         try:
+            from datetime import datetime
+            filename = Path(file_path).name
+            timestamp = datetime.now().strftime("Y%m%d+%H%M%S")
+            s3_key = f"input/{timestamp}_{filename}"
             
-            #s3_uri = self.s3_client.upload_file(file_path)
-            s3_uri = f"s3://{self.bucket_name}/bucket-hash"
+            logger.info(f"uploading {file_path} to s3://{self.bucket_name}/{s3_key}")
+            self.s3_client.upload_file(file_path, self.bucket_name, s3_key)
+
+            s3_uri = f"s3://{self.bucket_name}/{s3_key}"
+            logger.info(f'Upload successful: {s3_uri}')
             return s3_uri
 
         except Exception as e:
