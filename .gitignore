@@ -263,3 +263,4 @@ docker-compose.override.yml
 !frontend/lib
 # Ignore built files
 target/
+!backend/tests/performance/test_files/.gitkeep

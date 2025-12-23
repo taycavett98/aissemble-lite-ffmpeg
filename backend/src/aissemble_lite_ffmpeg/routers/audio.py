@@ -13,6 +13,7 @@ router = APIRouter(prefix="/audio", tags=["audio"])
 class PerformanceMetrics(BaseModel):
     """Performance metrics for audio processing."""
     total_processing_time_seconds: float
+    input_metadata: dict
     ffmpeg_conversion_time_seconds: float
     s3_upload_time_seconds: float
     s3_upload_speed_mbps: float

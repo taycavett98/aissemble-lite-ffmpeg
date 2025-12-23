@@ -3,6 +3,8 @@ import logging
 import os
 from pathlib import Path
 import time
+import subprocess
+
 from .ffmpeg_handler import FfmpegHandler
 from .s3_handler import S3Handler
 
@@ -29,6 +31,18 @@ class InputHandler():
         if extension not in ACCEPTABLE_TYPES:
             raise ValueError(f"Unsupported file type: {extension}. Supported files: {ACCEPTABLE_TYPES}")
 
+    def _probe_file(self, file_path: str) -> dict:
+        """Extract metadata using ffprobe"""
+        probe = self.ffmpeg_handler.probe_file(file_path)
+        logger.info(f'probe info for {file_path} -> {probe}\n')
+        format_info = probe['format']
+        logger.info(f'format: {format_info}')
+        streams_info = probe['streams']
+        logger.info(f'streams info: {streams_info}')        
+        return {
+            'format': format_info,
+            'streams': streams_info
+        }
 
     def _ensure_wav(self, input_file_path):
         """This function accepts an input file and returns .wav format. Always to ensure it is standardized."""
@@ -70,6 +84,8 @@ class InputHandler():
             # check if input extension is in acceptable types
             self._check_file_extension(input)
 
+            input_metadata = self._probe_file(file_path=input)
+
             wav_filepath, ffmpeg_metrics = self._ensure_wav(input)
             
             s3_uri, s3_metrics = self.s3_handler.upload_file(file_path=wav_filepath, original_filename=original_filename)
@@ -81,6 +97,7 @@ class InputHandler():
 
             metrics = {
                 'total_processing_time_seconds': round(total_time, 3),
+                'input_metadata': input_metadata,
                 **ffmpeg_metrics,
                 **s3_metrics
             }

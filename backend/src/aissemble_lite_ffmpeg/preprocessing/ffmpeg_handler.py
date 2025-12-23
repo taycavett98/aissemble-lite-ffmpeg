@@ -58,3 +58,6 @@ class FfmpegHandler():
             logger.error(f"Ffmpeg conversion failed - {input_file}: {str(e)}")
             raise RuntimeError(f"FFmpeg conversion failed for {input_file}: {str(e)}")
 
+    def probe_file(self, file_path: str)->dict:
+        """ Use ffmpeg probe to get metadata """
+        return ffmpeg.probe(file_path)

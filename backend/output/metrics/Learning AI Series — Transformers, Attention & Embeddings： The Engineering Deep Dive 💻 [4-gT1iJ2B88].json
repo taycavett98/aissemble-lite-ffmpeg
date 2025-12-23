@@ -1,0 +1,133 @@
+{
+  "filename": "Learning AI Series \u2014 Transformers, Attention & Embeddings\uff1a The Engineering Deep Dive \ud83d\udcbb [4-gT1iJ2B88].webm",
+  "s3_uri": "s3://aissemble-transcribe/input/20251223-164429_Learning_AI_Series_Transformers_Attention_Embeddings_The_Engineering_Deep_Dive_4-gT1iJ2B88.wav",
+  "metrics": {
+    "total_processing_time_seconds": 34.055,
+    "input_metadata": {
+      "format": {
+        "filename": "/var/folders/yp/w9n05llx4cs2m5fqg0qfd2sw0000gp/T/tmp5rd9qm3w.webm",
+        "nb_streams": 2,
+        "nb_programs": 0,
+        "nb_stream_groups": 0,
+        "format_name": "matroska,webm",
+        "format_long_name": "Matroska / WebM",
+        "start_time": "0.000000",
+        "duration": "13991.348000",
+        "size": "955872387",
+        "bit_rate": "546550",
+        "probe_score": 100,
+        "tags": {
+          "ENCODER": "Lavf62.3.100"
+        }
+      },
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "vp9",
+          "codec_long_name": "Google VP9",
+          "profile": "Profile 0",
+          "codec_type": "video",
+          "codec_tag_string": "[0][0][0][0]",
+          "codec_tag": "0x0000",
+          "width": 1920,
+          "height": 1080,
+          "coded_width": 1920,
+          "coded_height": 1080,
+          "has_b_frames": 0,
+          "sample_aspect_ratio": "1:1",
+          "display_aspect_ratio": "16:9",
+          "pix_fmt": "yuv420p",
+          "level": -99,
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709",
+          "refs": 1,
+          "r_frame_rate": "30/1",
+          "avg_frame_rate": "30/1",
+          "time_base": "1/1000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "eng",
+            "DURATION": "03:53:11.299000000"
+          }
+        },
+        {
+          "index": 1,
+          "codec_name": "opus",
+          "codec_long_name": "Opus (Opus Interactive Audio Codec)",
+          "codec_type": "audio",
+          "codec_tag_string": "[0][0][0][0]",
+          "codec_tag": "0x0000",
+          "sample_fmt": "fltp",
+          "sample_rate": "48000",
+          "channels": 2,
+          "channel_layout": "stereo",
+          "bits_per_sample": 0,
+          "initial_padding": 312,
+          "r_frame_rate": "0/0",
+          "avg_frame_rate": "0/0",
+          "time_base": "1/1000",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "extradata_size": 19,
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "eng",
+            "DURATION": "03:53:11.348000000"
+          }
+        }
+      ]
+    },
+    "ffmpeg_conversion_time_seconds": 17.734,
+    "input_file_size_bytes": 955872387,
+    "input_file_size_mb": 911.59,
+    "output_file_size_bytes": 447722318,
+    "output_file_size_mb": 426.98,
+    "size_reduction_percent": 53.16,
+    "s3_upload_time_seconds": 16.224,
+    "s3_upload_speed_mbps": 26.32
+  }
+}
