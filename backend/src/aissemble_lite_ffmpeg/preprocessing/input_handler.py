@@ -26,9 +26,9 @@ class InputHandler():
 
     def _ensure_wav(self, input_file_path):
         """This function accepts an input file and returns .wav format. Always to ensure it is standardized."""
-        output = self.ffmpeg_handler.convert_to_wav(input_file_path)
+        output, metrics = self.ffmpeg_handler.convert_to_wav(input_file_path)
         
-        return output
+        return output, metrics
 
 
     def process_input(self, input: str) -> tuple[str, dict]:
@@ -53,7 +53,7 @@ class InputHandler():
         total_time = time.time() - start_time
 
         metrics = {
-            'total_processing_time': round(total_time, 3),
+            'total_processing_time_seconds': round(total_time, 3),
             **ffmpeg_metrics,
             **s3_metrics
         }

@@ -33,7 +33,7 @@ class S3Handler():
             file_size_mb = file_size_bytes / (1024 * 1024)
 
             filename = Path(file_path).name
-            timestamp = datetime.now().strftime("Y%m%d+%H%M%S")
+            timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
             s3_key = f"input/{timestamp}_{filename}"
             
             logger.info(f"uploading {file_path} to s3://{self.bucket_name}/{s3_key}")
