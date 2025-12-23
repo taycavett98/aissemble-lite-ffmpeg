@@ -1,7 +1,61 @@
-# Transcription Protoype
+# Transcription Pipeline
+end to end pipeline for processing audio/video files and transcribing them using AWS transcribe
 
+## Architecture
+2 main stages in the pipeline:
+1. audio processing - `/audio/process`: converts video/audio files into standard WAV files, uploads to s3 bucket and returns s3_uri
+example response:
+```bash
+{
+  "s3_uri": "s3://aissemble-transcribe/input/20251223-124027_file_converted.wav",
+  "original_filename": "video.mp4",
+  "message": "Audio Processed Successfully",
+  "metrics": {
+    "total_processing_time_seconds": 183.683,
+    "ffmpeg_conversion_time_seconds": 0.423,
+    "s3_upload_time_seconds": 183.26,
+    "s3_upload_speed_mbps": 0.19,
+    "input_file_size_mb": 146.25,
+    "output_file_size_mb": 34.71,
+    "size_reduction_percent": 76.27
+  }
+}
+```
+2. transcription - `/transcribe`: uses AWS transcribe to generate transcripts from s3_uri 
+example input:
+```bash
+{
+  "s3_uris": [
+    "s3://aissemble-transcribe/input/20251223-124027_file_converted.wav"
+  ]
+}
+```
 
-1. use ffmpeg to extract audio to pass to a transcription function
+example output:
+```bash
+{
+  "total_files": 1,
+  "successful": 1,
+  "failed": 0,
+  "results": [
+    {
+      "s3_uri": "s3://aissemble-transcribe/input/20251223-124027_file_converted.wav",
+      "success": true,
+      "s3_output_uri": "s3://aissemble-transcribe/output/file_transcription.json",
+      "error": null
+    }
+  ]
+}
+```
+
+## Metrics
+`/audio/process` endpoint returns the following metrics:
+- total_processing_time_seconds : end to end time from upload to s3_uri response
+- ffmpeg_conversion_time_seconds: time spent converting file to WAV format
+- s3_upload_time_seconds : time spent uploading WAV file to s3 bucket
+- input_file_size_mb : size of original uploaded file
+- output_file_size_mb : size of converted WAV file
+- size_reduction_percent : reduction in size after conversion 
 
 ## project goals
 - quick MVP/prototype to satisfy a customer in 3 weeks

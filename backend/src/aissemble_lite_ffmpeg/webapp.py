@@ -62,6 +62,15 @@ Users should update this to use their custom handler/adapter as needed.
 For more information, reference the aiSSEMBLE Open Inference Protocol FastAPI README
 (https://github.com/boozallen/aissemble-open-inference-protocol/blob/dev/aissemble-open-inference-protocol-fastapi/README.md).
 """
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler() 
+    ]
+)
 service = AissembleOIPFastAPI(InferenceHandler)
 app = service.server
 app.include_router(audio_router)
