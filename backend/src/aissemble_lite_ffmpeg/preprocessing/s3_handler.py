@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 import time
 import boto3
 import os
@@ -16,7 +17,7 @@ class S3Handler():
         self.s3_client = boto3.client('s3', region_name = self.region)
 
 
-    def upload_file(self, file_path) -> tuple[str, dict]:
+    def upload_file(self, file_path: str, original_filename: str = None) -> tuple[str, dict]:
         """This function uploads file to the bucket and returns a uri
         
         Args:
@@ -32,7 +33,18 @@ class S3Handler():
             file_size_bytes = os.path.getsize(file_path)
             file_size_mb = file_size_bytes / (1024 * 1024)
 
-            filename = Path(file_path).name
+            if original_filename:
+                base_name = Path(original_filename).stem
+                # keep only alphanumeric, hyphens, and underscores
+                base_name = re.sub(r'[^\w\-]', '_', base_name)
+                # replace multiple underscores with single underscore
+                base_name = re.sub(r'_+', '_', base_name)
+                # remove leading/trailing underscores
+                base_name = base_name.strip('_')
+                filename = f"{base_name}.wav"
+            else:
+                filename = Path(file_path).name
+
             timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
             s3_key = f"input/{timestamp}_{filename}"
             

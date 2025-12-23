@@ -6,7 +6,7 @@ import time
 from .ffmpeg_handler import FfmpegHandler
 from .s3_handler import S3Handler
 
-ACCEPTABLE_TYPES = {'.mp3', '.mp4', '.wav', '.m4a', '.flac', '.avi'}  # Use set for O(1) lookup
+ACCEPTABLE_TYPES = {'.mp3', '.mp4', '.wav', '.m4a', '.flac', '.avi', '.webm'}  # Use set for O(1) lookup
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +72,7 @@ class InputHandler():
 
             wav_filepath, ffmpeg_metrics = self._ensure_wav(input)
             
-            s3_uri, s3_metrics = self.s3_handler.upload_file(file_path=wav_filepath)
+            s3_uri, s3_metrics = self.s3_handler.upload_file(file_path=wav_filepath, original_filename=original_filename)
 
             if not s3_uri:
                 raise RuntimeError(f"Failed to upload {wav_filepath} to S3")
