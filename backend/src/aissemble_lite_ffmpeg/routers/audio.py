@@ -10,12 +10,22 @@ from ..preprocessing.input_handler import InputHandler
 
 router = APIRouter(prefix="/audio", tags=["audio"])
 
+class PerformanceMetrics(BaseModel):
+    """Performance metrics for audio processing."""
+    total_processing_time_seconds: float
+    ffmpeg_conversion_time_seconds: float
+    s3_upload_time_seconds: float
+    s3_upload_speed_mbps: float
+    input_file_size_mb: float
+    output_file_size_mb: float
+    size_reduction_percent: float
+
 class AudioProcessResponse(BaseModel):
     """Response model for audio processing."""
-
     s3_uri: str
     original_filename: str
     message: str = "Audio Processed Successfully"
+    metrics: PerformanceMetrics
 
 @router.post("/process", response_model=AudioProcessResponse)
 async def process_audio(file: UploadFile = File(...)) -> AudioProcessResponse:
@@ -37,11 +47,12 @@ async def process_audio(file: UploadFile = File(...)) -> AudioProcessResponse:
 
     try:
         handler = InputHandler()
-        uri = handler.process_input(tmp_file_path)
+        uri, metrics = handler.process_input(tmp_file_path)
 
         return AudioProcessResponse(
             s3_uri=uri, 
-            original_filename=file.filename
+            original_filename=file.filename,
+            metrics=PerformanceMetrics(**metrics)
         )
     
     except (FileNotFoundError, ValueError, RuntimeError) as e:
