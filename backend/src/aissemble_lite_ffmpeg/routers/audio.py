@@ -47,7 +47,7 @@ async def process_audio(file: UploadFile = File(...)) -> AudioProcessResponse:
 
     try:
         handler = InputHandler()
-        uri, metrics = handler.process_input(tmp_file_path)
+        uri, metrics = handler.process_input(tmp_file_path, file.filename)
 
         return AudioProcessResponse(
             s3_uri=uri, 
